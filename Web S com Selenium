@@ -1,0 +1,30 @@
+!pip install selenium
+!apt-get update # to update ubuntu to correctly run apt install
+!apt install chromium-chromedriver
+!cp /usr/lib/chromium-browser/chromedriver /usr/bin
+import sys
+sys.path.insert(0,'/usr/lib/chromium-browser/chromedriver')
+from selenium import webdriver
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+driver = webdriver.Chrome('chromedriver',chrome_options=chrome_options)
+driver.get("https://www.webite-url.com")
+
+from selenium.webdriver.common.keys import Keys
+# Site que o web crawlwer vai acessar
+url = 'https://statusinvest.com.br/'
+driver.get(url)
+
+# Para um busca simples, usar código abaixo
+'''
+elemento_Xpath = '//*[@id="tsf"]/div[2]/div[1]/div[1]/div/div[2]/input'
+resposta = driver.find_element_by_xpath(elemento_Xpath).send_keys(Keys.RETURN)
+print(resposta)
+'''
+
+#Para uma busca por multiplos elementos usar código abaixo
+for x in range(2,4):
+  respostas = driver.find_element_by_xpath('/html/body/main/section[1]/div/div[2]/a['+str(x)+']/div[1]/strong')
+  print(respostas.text)
